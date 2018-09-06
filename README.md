@@ -1,6 +1,4 @@
 # mdp
-MDP implementation reference code
-
 This implementation relies on the [pymdptoolbox](https://github.com/sawcordwell/pymdptoolbox) toolkit.
 
 ## MDPs in pymdptoolbox - Class Assignment
