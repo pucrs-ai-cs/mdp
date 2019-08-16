@@ -161,3 +161,21 @@ def print_policy(policy, shape, obstacles=[], terminals=[]):
         elif sub in terminals: p_policy[sub[0]][sub[1]] = 'T'
         else: p_policy[sub[0]][sub[1]] = ACTIONS[policy[i]]
     print(p_policy)
+
+from IPython.display import HTML, display
+
+SYMBOLS = ['&uarr;','&darr;','&rarr;','&rarr;']
+
+def display_policy(policy, shape, obstacles=[], terminals=[]):
+    p_policy = _np.empty(shape, dtype=object)
+    for i in range(len(policy)):
+        sub = ind2sub(shape, i)
+        if sub in obstacles: p_policy[sub[0]][sub[1]] = '&#x25FE;'
+        elif sub in terminals: p_policy[sub[0]][sub[1]] = '&#x25CE;'
+        else: p_policy[sub[0]][sub[1]] = SYMBOLS[policy[i]]
+    display(HTML(
+        '<table style="font-size:300%;border: thick solid;"><tr>{}</tr></table>'.format(
+            '</tr><tr>'.join(
+                '<td>{}</td>'.format('</td><td>'.join(str(_) for _ in row)) for row in p_policy)
+            )
+     ))
