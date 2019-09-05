@@ -68,8 +68,9 @@ def mdp_grid(shape=[], obstacles=[], terminals=[], pm=0.8, r=1, rewards=[]):
         Sv = rewards[i][2]
         SR = sub2ind(shape, Si,Sj)
         R[SR]=Sv
+
     RSS = r_to_rs(P,R,terminals,obstacles, shape)
-    return(P, RSS)
+    return(P, RSS, R)
 
 # def r_to_rss(P, R, terminals, obstacles):
 #     RSS = _np.zeros([4,len(P[1]),len(P[1])])
@@ -88,7 +89,8 @@ def r_to_rs(P, R, terminals, obstacles, shape):
         for A in range(4):
             sub = ind2sub(shape, I)
             #if sub in obstacles: RS[I,A] = 0
-            if sub in terminals: RS[I,A] = R[I]
+            if sub in terminals: 
+                RS[I,A] = R[I]
             else:
                 for J in range(len(P[1])):
                     RS[I,A] = RS[I,A] + (P[A,I,J] * R[J])
@@ -164,7 +166,7 @@ def print_policy(policy, shape, obstacles=[], terminals=[]):
 
 from IPython.display import HTML, display
 
-SYMBOLS = ['&uarr;','&darr;','&rarr;','&rarr;']
+SYMBOLS = ['&uarr;','&darr;','&rarr;','&larr;']
 
 def display_policy(policy, shape, obstacles=[], terminals=[]):
     p_policy = _np.empty(shape, dtype=object)

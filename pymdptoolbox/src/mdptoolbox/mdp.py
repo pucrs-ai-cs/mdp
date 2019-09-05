@@ -1514,7 +1514,8 @@ class ValueIterationGS(ValueIteration):
 
         MDP.__init__(self, transitions, reward, discount, epsilon, max_iter,
                      skip_check=skip_check)
-
+        self.iterations_list = []
+        self.v_list = []
         # initialization of optional arguments
         if initial_value == 0:
             self.V = _np.zeros(self.S)
@@ -1544,21 +1545,22 @@ class ValueIterationGS(ValueIteration):
         # Run the value iteration Gauss-Seidel algorithm.
 
         self._startRun()
-
+        self.v_list.append(self.V.copy())
         while True:
             self.iter += 1
 
             Vprev = self.V.copy()
 
             for s in range(self.S):
+                
                 Q = [float(self.R[a][s] +
                            self.discount * self.P[a][s, :].dot(self.V))
                      for a in range(self.A)]
-
                 self.V[s] = max(Q)
-
+            
             variation = _util.getSpan(self.V - Vprev)
-
+            self.iterations_list.append(variation)
+            self.v_list.append(self.V.copy())
             if self.verbose:
                 _printVerbosity(self.iter, variation)
 
