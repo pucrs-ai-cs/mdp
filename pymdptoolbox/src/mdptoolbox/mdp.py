@@ -1353,7 +1353,8 @@ class ValueIteration(MDP):
 
         MDP.__init__(self, transitions, reward, discount, epsilon, max_iter,
                      skip_check=skip_check)
-
+        self.iterations_list = []
+        self.v_list = []
         # initialization of optional arguments
         if initial_value == 0:
             self.V = _np.zeros(self.S)
@@ -1434,7 +1435,8 @@ class ValueIteration(MDP):
             # "axis" means the axis along which to operate. In this case it
             # finds the maximum of the the rows. (Operates along the columns?)
             variation = _util.getSpan(self.V - Vprev)
-
+            self.iterations_list.append(variation)
+            self.v_list.append(self.V.copy())
             if self.verbose:
                 _printVerbosity(self.iter, variation)
 
