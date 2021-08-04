@@ -1185,7 +1185,7 @@ class RelativeValueIteration(MDP):
                  skip_check=False):
         # Initialise a relative value iteration MDP.
 
-        MDP.__init__(self,  transitions, reward, None, epsilon, max_iter,
+        MDP.__init__(self, transitions, reward, None, epsilon, max_iter,
                      skip_check=skip_check)
 
         self.epsilon = epsilon
